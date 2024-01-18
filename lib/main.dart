@@ -14,8 +14,12 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        scaffoldBackgroundColor: Colors.amber.shade50,
+        expansionTileTheme: const ExpansionTileThemeData(
+          shape: OutlineInputBorder(borderSide: BorderSide.none)
+        )
       ),
+
       home: const Home()
     );
   }
