@@ -31,26 +31,28 @@ class _SideNavBarState extends State<SideNavBar> {
                     return ListTile(
                       leading: const Icon(Icons.sort),
                       title: Text(nav.title),
-                      selected: nav.selected ?? false,
                     );
                   }else{
                     return ExpansionTile(
                       title: Text(nav.title),
                       leading: const Icon(Icons.sort) ,
+                      maintainState: true,
                        childrenPadding: const EdgeInsets.only(left: 10),
                       children: nav.children!.map((childNav) {
                         if(childNav.children==null){
                           return ListTile(
-                            leading: const Icon(Icons.policy_rounded, size: 18,),
+                            leading: const Icon(Icons.policy_rounded),
                             title: Text(childNav.title),
+                            onTap: () { },
                           );
                         }else{
                           return ExpansionTile(
                             childrenPadding: const EdgeInsets.only(left: 15),
                             title: Text(childNav.title),
-                            leading: const Icon(Icons.policy, size: 18,),
+                            leading: const Icon(Icons.policy),
                             children: childNav.children!.map((subNav) => ListTile(
-                              title: Text(subNav.title),
+                              onTap: () => setState(() { }),
+                              title: Text(subNav.title,),
                               leading: const Icon(Icons.label_important_outline),
                             )).toList(),
                             );

@@ -15,10 +15,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         scaffoldBackgroundColor: Colors.amber.shade50,
-        expansionTileTheme: const ExpansionTileThemeData(
-          shape: OutlineInputBorder(borderSide: BorderSide.none)
-        )
+        expansionTileTheme:const ExpansionTileThemeData(
+          shape: RoundedRectangleBorder(side: BorderSide.none ),
+        ),
       ),
+
+      darkTheme: ThemeData.dark().copyWith(
+         expansionTileTheme:const ExpansionTileThemeData(
+          shape: RoundedRectangleBorder(side: BorderSide.none ),
+        ),
+      ),
+
+      themeMode: ThemeMode.light,
 
       home: const Home()
     );

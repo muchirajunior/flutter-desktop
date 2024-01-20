@@ -22,7 +22,7 @@ class Utils{
           title: 'documents',
           tab: const TabSample(title: 'docs',),
           children: [
-            Navigation(title: 'inventory transfer request',tab: const TabSample(title: 'request tab',)),
+            Navigation(title: 'transfer request',tab: const TabSample(title: 'request tab',)),
             Navigation(title: 'inventory transfer',tab: const TabSample(title: 'transfer tab',)),
             Navigation(title: 'inventory request',tab: const TabSample(title: 'transfer tab',)),
             Navigation(title: 'inventory posting',tab: const TabSample(title: 'transfer tab',)),
@@ -30,6 +30,7 @@ class Utils{
           ]
           )
       ]
-    )
+    ),
+    Navigation(title: 'settings',tab: const TabSample(title: 'settings',)),
   ];
 }
