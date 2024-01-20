@@ -11,6 +11,7 @@ class MainArea extends StatefulWidget {
 class _MainAreaState extends State<MainArea> {
   List<String> tabs=["dashboard","users","orders","settings "];
   String currentTab ='';
+  ScrollController controller=ScrollController();
 
   @override
   void initState() {
@@ -30,30 +31,36 @@ class _MainAreaState extends State<MainArea> {
         children: [
           Container(
             height: 50,
-            width: double.infinity,
+            // width: 400,
             margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: tabs.map((tab) => Container(
-                height: 40,
-                constraints: const BoxConstraints(
-                  minWidth: 150,
-                  maxWidth: 200
-                ),
-                child: Card(
-                  elevation: tab ==currentTab ? 1 : 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(3),
+            child: Scrollbar(
+              controller: controller,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                controller: controller,
+                children: tabs.map((tab) => Container(
+                  constraints: const BoxConstraints(
+                    minWidth: 150,
+                    maxWidth: 250
                   ),
-                  margin: const EdgeInsets.all(1),
-                  child: ListTile(
-                    leading: const Icon(Icons.file_copy, size: 15,),
-                    title: Text(tab),
-                    trailing: const Icon(Icons.close, size: 15,),
-                    onTap: () => setState(() => currentTab=tab),
-                  )
-                ),
-              )).toList(),
+                  child: Card(
+                    elevation: tab ==currentTab ? 1 : 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(3),
+                    ),
+                    margin: const EdgeInsets.all(1),
+                    child: ListTile(
+                      leading: const Icon(Icons.file_copy, size: 15,),
+                      title: Text(tab),
+                      trailing:IconButton(
+                        onPressed:()=> setState(() => tabs.remove(tab) ) ,
+                         icon: const Icon(Icons.close, size: 15,)
+                         ),
+                      onTap: () => setState(() => currentTab=tab),
+                    )
+                  ),
+                )).toList(),
+              ),
             )
           ),
           const Expanded(child: TabSample())

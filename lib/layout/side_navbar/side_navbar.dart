@@ -13,7 +13,6 @@ class _SideNavBarState extends State<SideNavBar> {
   Widget build(BuildContext context) {
     return  SizedBox(
       height: double.infinity,
-      // width: 250,
       child: Card(
         child: Column(
           children: [
