@@ -73,9 +73,10 @@ class Utils{
 
   static void removeTab(TabModel tabModel){
     int index= navigationController.value.tabs.indexOf(tabModel);
+    int currentIndex=navigationController.value.currentTabIndex;
     navigationController.value.tabs.remove(tabModel);
     navigationController.value = NavController(
-        currentTabIndex: index == navigationController.value.currentTabIndex ? index-1 : navigationController.value.currentTabIndex,
+        currentTabIndex: index == currentIndex ? index-1 : index<currentIndex ? currentIndex -1 : currentIndex,
         tabs: navigationController.value.tabs,
         scrollController: ScrollController()
     );
