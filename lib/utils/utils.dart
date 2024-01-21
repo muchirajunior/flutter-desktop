@@ -51,7 +51,7 @@ class Utils{
   static void addTab(Navigation navigation){
     var results=navigationController.value.tabs.where((element) => element.title==navigation.title);
     if(results.isNotEmpty){
-      log("an similar tab exist");
+      log("a similar tab exist");
       navigationController.value.currentTabIndex = navigationController.value.tabs.indexOf(results.first);
       navigationController.value = NavController(
         currentTabIndex: navigationController.value.tabs.indexOf(results.first),
@@ -75,8 +75,9 @@ class Utils{
     int index= navigationController.value.tabs.indexOf(tabModel);
     int currentIndex=navigationController.value.currentTabIndex;
     navigationController.value.tabs.remove(tabModel);
+    int length = navigationController.value.tabs.length;
     navigationController.value = NavController(
-        currentTabIndex: index == currentIndex ? index-1 : index<currentIndex ? currentIndex -1 : currentIndex,
+        currentTabIndex: index==0 && length>0 ? 0 : index == currentIndex ? index-1 : index<currentIndex ? currentIndex -1 : currentIndex,
         tabs: navigationController.value.tabs,
         scrollController: ScrollController()
     );
