@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_desktop/components/tab_sample.dart';
+import 'package:flutter_desktop/models/nav_controller.dart';
+import 'package:flutter_desktop/utils/utils.dart';
 
 class MainArea extends StatefulWidget {
   const MainArea({super.key});
@@ -9,63 +10,64 @@ class MainArea extends StatefulWidget {
 }
 
 class _MainAreaState extends State<MainArea> {
-  List<String> tabs=["dashboard","users","orders","settings "];
-  String currentTab ='';
-  ScrollController controller=ScrollController();
-
-  @override
-  void initState() {
-    currentTab=tabs.first;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      // margin: EdgeInsets.all(10),
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
-        ),
-      child: Column(
-        children: [
-          Container(
-            height: 50,
-            // width: 400,
-            margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-            child: Scrollbar(
-              controller: controller,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                controller: controller,
-                children: tabs.map((tab) => Container(
-                  constraints: const BoxConstraints(
-                    minWidth: 150,
-                    maxWidth: 250
+    return ValueListenableBuilder(
+      valueListenable: Utils.navigationController,
+      builder: (context,nav,_) {
+        return Card(
+          elevation: 3,
+          // margin: EdgeInsets.all(10),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+          child: Column(
+            children: [
+              Container(
+                height: 50,
+                // width: 400,
+                margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                child: Scrollbar(
+                  controller: nav.scrollController,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    controller: nav.scrollController,
+                    children: nav.tabs.map((tab) => Container(
+                      width: tab.title.length*22,
+                      constraints: const BoxConstraints(
+                        minWidth: 150,
+                        maxWidth: 300
+                      ),
+                      child: Card(
+                        elevation: nav.tabs.indexOf(tab) == nav.currentTabIndex ? 3 : 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                        margin: const EdgeInsets.all(1),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.only(left:10),
+                          selected:  nav.tabs.indexOf(tab) == nav.currentTabIndex ,
+                          leading: const Icon(Icons.file_copy, size: 15,),
+                          title: Text(tab.title, maxLines: 1,overflow: TextOverflow.ellipsis,),
+                          trailing:IconButton(
+                            onPressed:()=> Utils.removeTab(tab) ,
+                             icon: const Icon(Icons.close, size: 15,)
+                             ),
+                          onTap: () {
+                            Utils.navigationController.value =  NavController(currentTabIndex: nav.tabs.indexOf(tab), tabs: nav.tabs, scrollController: nav.scrollController);
+                          }
+                        )
+                      ),
+                    )).toList(),
                   ),
-                  child: Card(
-                    elevation: tab ==currentTab ? 1 : 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(3),
-                    ),
-                    margin: const EdgeInsets.all(1),
-                    child: ListTile(
-                      leading: const Icon(Icons.file_copy, size: 15,),
-                      title: Text(tab),
-                      trailing:IconButton(
-                        onPressed:()=> setState(() => tabs.remove(tab) ) ,
-                         icon: const Icon(Icons.close, size: 15,)
-                         ),
-                      onTap: () => setState(() => currentTab=tab),
-                    )
-                  ),
-                )).toList(),
+                )
               ),
-            )
+              Expanded(child: nav.currentTabIndex<0 ? const Center(child: Text("Nothing much here ...."),) : nav.tabs[nav.currentTabIndex].tab)
+            ],
           ),
-          const Expanded(child: TabSample())
-        ],
-      ),
+        );
+      }
     );
   }
 }

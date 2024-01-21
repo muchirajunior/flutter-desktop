@@ -30,19 +30,20 @@ class _SideNavBarState extends State<SideNavBar> {
                     return ListTile(
                       leading: const Icon(Icons.sort),
                       title: Text(nav.title),
+                      onTap: () => Utils.addTab(nav),
                     );
                   }else{
                     return ExpansionTile(
                       title: Text(nav.title),
                       leading: const Icon(Icons.sort) ,
                       maintainState: true,
-                       childrenPadding: const EdgeInsets.only(left: 10),
+                      childrenPadding: const EdgeInsets.only(left: 10),
                       children: nav.children!.map((childNav) {
                         if(childNav.children==null){
                           return ListTile(
                             leading: const Icon(Icons.policy_rounded),
                             title: Text(childNav.title),
-                            onTap: () { },
+                            onTap: () =>Utils.addTab(childNav),
                           );
                         }else{
                           return ExpansionTile(
@@ -50,7 +51,7 @@ class _SideNavBarState extends State<SideNavBar> {
                             title: Text(childNav.title),
                             leading: const Icon(Icons.policy),
                             children: childNav.children!.map((subNav) => ListTile(
-                              onTap: () => setState(() { }),
+                              onTap: () => Utils.addTab(subNav),
                               title: Text(subNav.title,),
                               leading: const Icon(Icons.label_important_outline),
                             )).toList(),

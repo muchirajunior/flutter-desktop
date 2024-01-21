@@ -36,7 +36,7 @@ class _HomeState extends State<Home> {
                 child: const SideNavBar(),
               ),
             ),
-            const Expanded(child: MainArea())
+            Expanded(child: MainArea())
           ],
         )
       ),
