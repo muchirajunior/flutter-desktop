@@ -9,6 +9,7 @@ import 'package:flutter_desktop/models/navigation.dart';
 import 'package:flutter_desktop/models/tab_model.dart';
 
 class Utils{
+  static final navKey = GlobalKey<NavigatorState>();
   static final List<Navigation> navigations=[
     Navigation(title: 'dashboard',tab: const Dashboard()),
     Navigation(title: 'users',tab: const Users()),
@@ -54,23 +55,27 @@ class Utils{
       navigationController.value.currentTabIndex = navigationController.value.tabs.indexOf(results.first);
       navigationController.value = NavController(
         currentTabIndex: navigationController.value.tabs.indexOf(results.first),
-         tabs: navigationController.value.tabs, scrollController: ScrollController());
+        tabs: navigationController.value.tabs, 
+        scrollController: navigationController.value.scrollController
+      );
       return;
     }
+    navigationController.value.scrollController.position.maxScrollExtent;
     navigationController.value=NavController(
       currentTabIndex: navigationController.value.tabs.length,
       tabs: [...navigationController.value.tabs, TabModel(title: navigation.title, tab: navigation.tab)],
-      scrollController: ScrollController(
-        initialScrollOffset: navigationController.value.scrollController.position.maxScrollExtent
-      )
+      scrollController: navigationController.value.scrollController
     );
+
+    navigationController.value.scrollController.jumpTo(navigationController.value.scrollController.position.maxScrollExtent+200);
     
   }
 
   static void removeTab(TabModel tabModel){
+    int index= navigationController.value.tabs.indexOf(tabModel);
     navigationController.value.tabs.remove(tabModel);
     navigationController.value = NavController(
-        currentTabIndex: navigationController.value.tabs.length-1,
+        currentTabIndex: index == navigationController.value.currentTabIndex ? index-1 : navigationController.value.currentTabIndex,
         tabs: navigationController.value.tabs,
         scrollController: ScrollController()
     );
