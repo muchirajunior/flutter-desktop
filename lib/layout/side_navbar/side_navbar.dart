@@ -19,8 +19,8 @@ class _SideNavBarState extends State<SideNavBar> {
             const ListTile(
               contentPadding: EdgeInsets.symmetric(horizontal: 2),
               leading: CircleAvatar(child: Icon(Icons.person)),
-              title: Text("user name"),
-              subtitle: Text("user.name@mail.com"),
+              title: Text("User Name"),
+              subtitle: Text("user.name@company.com"),
             ),
             const Divider(),
             Expanded(

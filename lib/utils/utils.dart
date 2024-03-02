@@ -11,35 +11,35 @@ import 'package:flutter_desktop/models/tab_model.dart';
 class Utils{
   static final navKey = GlobalKey<NavigatorState>();
   static final List<Navigation> navigations=[
-    Navigation(title: 'dashboard',tab: const Dashboard()),
-    Navigation(title: 'users',tab: const Users()),
+    Navigation(title: 'Dashboard',tab: const Dashboard()),
+    Navigation(title: 'Users',tab: const Users()),
     Navigation(
       title: 'Sales',
       tab: const TabSample(title: 'Sales',),
       children: [
-        Navigation(title: 'orders',tab: const TabSample(title: 'Orders',),selected: true),
-        Navigation(title: 'invoice',tab: const TabSample(title: 'Invoices',))
+        Navigation(title: 'Orders',tab: const TabSample(title: 'Orders',),selected: true),
+        Navigation(title: 'Invoice',tab: const TabSample(title: 'Invoices',))
       ]
     ),
      Navigation(
       title: 'Items',
       tab: const TabSample(title: 'Items',),
       children: [
-        Navigation(title: 'itemdata',tab: const TabSample(title: 'Items tab',)),
+        Navigation(title: 'Itemdata',tab: const TabSample(title: 'Items tab',)),
         Navigation(
-          title: 'documents',
+          title: 'Documents',
           tab: const TabSample(title: 'docs',),
           children: [
-            Navigation(title: 'transfer request',tab: const TabSample(title: 'request tab',)),
-            Navigation(title: 'inventory transfer',tab: const TabSample(title: 'transfer tab',)),
-            Navigation(title: 'inventory request',tab: const TabSample(title: 'transfer tab',)),
-            Navigation(title: 'inventory posting',tab: const TabSample(title: 'transfer tab',)),
-            Navigation(title: 'inventory update',tab: const TabSample(title: 'transfer tab',)),
+            Navigation(title: 'Transfer Request',tab: const TabSample(title: 'Request tab',)),
+            Navigation(title: 'Inventory Transfer',tab: const TabSample(title: 'Transfer tab',)),
+            Navigation(title: 'Inventory Request',tab: const TabSample(title: 'Transfer tab',)),
+            Navigation(title: 'Inventory Posting',tab: const TabSample(title: 'Transfer tab',)),
+            Navigation(title: 'Inventory Update',tab: const TabSample(title: 'Transfer tab',)),
           ]
           )
       ]
     ),
-    Navigation(title: 'settings',tab: const TabSample(title: 'settings',)),
+    Navigation(title: 'Settings',tab: const TabSample(title: 'Settings tab',)),
   ];
 
   static final navigationController = ValueNotifier<NavController>(NavController(
@@ -51,7 +51,7 @@ class Utils{
   static void addTab(Navigation navigation){
     var results=navigationController.value.tabs.where((element) => element.title==navigation.title);
     if(results.isNotEmpty){
-      log("a similar tab exist");
+      log("A similar tab exist");
       navigationController.value.currentTabIndex = navigationController.value.tabs.indexOf(results.first);
       navigationController.value = NavController(
         currentTabIndex: navigationController.value.tabs.indexOf(results.first),
