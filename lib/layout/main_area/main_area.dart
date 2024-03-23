@@ -9,11 +9,11 @@ class MainArea extends StatefulWidget {
   State<MainArea> createState() => _MainAreaState();
 }
 
-class _MainAreaState extends State<MainArea> with AutomaticKeepAliveClientMixin  {
+class _MainAreaState extends State<MainArea>  {
   PageController controller = PageController();
 
-  @override
-  bool get wantKeepAlive => true;
+  // @override
+  // bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -22,7 +22,7 @@ class _MainAreaState extends State<MainArea> with AutomaticKeepAliveClientMixin 
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    // super.build(context);
      
     return ValueListenableBuilder(
       valueListenable: Utils.navigationController,
