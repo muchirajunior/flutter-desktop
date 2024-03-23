@@ -9,10 +9,21 @@ class MainArea extends StatefulWidget {
   State<MainArea> createState() => _MainAreaState();
 }
 
-class _MainAreaState extends State<MainArea> {
+class _MainAreaState extends State<MainArea> with AutomaticKeepAliveClientMixin  {
+  PageController controller = PageController();
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+     
     return ValueListenableBuilder(
       valueListenable: Utils.navigationController,
       builder: (context,nav,_) {
@@ -56,6 +67,7 @@ class _MainAreaState extends State<MainArea> {
                              ),
                           onTap: () {
                             Utils.navigationController.value =  NavController(currentTabIndex: nav.tabs.indexOf(tab), tabs: nav.tabs, scrollController: nav.scrollController);
+                            controller.jumpToPage(nav.currentTabIndex);
                           }
                         )
                       ),
@@ -63,7 +75,16 @@ class _MainAreaState extends State<MainArea> {
                   ),
                 )
               ),
-              Expanded(child: nav.currentTabIndex<0 ? const Center(child: Text("Nothing much here ...."),) : nav.tabs[nav.currentTabIndex].tab)
+            
+              Expanded(
+                child: PageView(
+                  pageSnapping: true,
+                  allowImplicitScrolling: true,
+                  scrollDirection: Axis.vertical,
+                  controller: controller,
+                  children: nav.tabs.map((tab) => tab.tab).toList(),
+                )
+              )
             ],
           ),
         );
