@@ -15,12 +15,11 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Center(
       key: GlobalKey(debugLabel: 'dashboard'),
-      child: Column(
-        children: [
-          TextFormField(
-            controller: controller
-          )
-        ],
+      child: SizedBox(
+        width: 400,
+        child: TextFormField(
+          controller: controller
+        ),
       ),
     );
   }

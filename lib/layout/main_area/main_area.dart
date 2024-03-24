@@ -10,19 +10,9 @@ class MainArea extends StatefulWidget {
 }
 
 class _MainAreaState extends State<MainArea>  {
-  PageController controller = PageController();
-
-  // @override
-  // bool get wantKeepAlive => true;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+  
   @override
   Widget build(BuildContext context) {
-    // super.build(context);
      
     return ValueListenableBuilder(
       valueListenable: Utils.navigationController,
@@ -40,10 +30,10 @@ class _MainAreaState extends State<MainArea>  {
                 // width: 400,
                 margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 child: Scrollbar(
-                  controller: nav.scrollController,
+                  controller: Utils.scrollController,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
-                    controller: nav.scrollController,
+                    controller: Utils.scrollController,
                     children: nav.tabs.map((tab) => Container(
                       width: tab.title.length*22,
                       constraints: const BoxConstraints(
@@ -66,8 +56,7 @@ class _MainAreaState extends State<MainArea>  {
                              icon: const Icon(Icons.close, size: 15,)
                              ),
                           onTap: () {
-                            Utils.navigationController.value =  NavController(currentTabIndex: nav.tabs.indexOf(tab), tabs: nav.tabs, scrollController: nav.scrollController);
-                            controller.jumpToPage(nav.currentTabIndex);
+                            Utils.navigationController.value =  NavController(currentTabIndex: nav.tabs.indexOf(tab), tabs: nav.tabs,);
                           }
                         )
                       ),
@@ -77,11 +66,8 @@ class _MainAreaState extends State<MainArea>  {
               ),
             
               Expanded(
-                child: PageView(
-                  pageSnapping: true,
-                  allowImplicitScrolling: true,
-                  scrollDirection: Axis.vertical,
-                  controller: controller,
+                child: IndexedStack(
+                  index: nav.currentTabIndex,
                   children: nav.tabs.map((tab) => tab.tab).toList(),
                 )
               )

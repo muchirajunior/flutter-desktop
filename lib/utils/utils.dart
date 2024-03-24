@@ -42,10 +42,11 @@ class Utils{
     Navigation(title: 'Settings',tab: const TabSample(title: 'Settings tab',)),
   ];
 
+  static final ScrollController scrollController = ScrollController();
+
   static final navigationController = ValueNotifier<NavController>(NavController(
       currentTabIndex: -1,
       tabs: [],
-      scrollController: ScrollController()
     ));
 
   static void addTab(Navigation navigation){
@@ -56,18 +57,16 @@ class Utils{
       navigationController.value = NavController(
         currentTabIndex: navigationController.value.tabs.indexOf(results.first),
         tabs: navigationController.value.tabs, 
-        scrollController: navigationController.value.scrollController
       );
       return;
     }
-    navigationController.value.scrollController.position.maxScrollExtent;
+    scrollController.position.maxScrollExtent;
     navigationController.value=NavController(
       currentTabIndex: navigationController.value.tabs.length,
       tabs: [...navigationController.value.tabs, TabModel(title: navigation.title, tab: navigation.tab)],
-      scrollController: navigationController.value.scrollController
     );
 
-    navigationController.value.scrollController.jumpTo(navigationController.value.scrollController.position.maxScrollExtent+200);
+    scrollController.jumpTo(scrollController.position.maxScrollExtent+200);
     
   }
 
@@ -79,7 +78,6 @@ class Utils{
     navigationController.value = NavController(
         currentTabIndex: index==0 && length>0 ? 0 : index == currentIndex ? index-1 : index<currentIndex ? currentIndex -1 : currentIndex,
         tabs: navigationController.value.tabs,
-        scrollController: ScrollController()
     );
   }
 
