@@ -10,6 +10,8 @@ class MainArea extends StatefulWidget {
 }
 
 class _MainAreaState extends State<MainArea>  {
+
+  bool showDragHandles =false;
   
   @override
   Widget build(BuildContext context) {
@@ -31,10 +33,28 @@ class _MainAreaState extends State<MainArea>  {
                 margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 child: Scrollbar(
                   controller: Utils.scrollController,
-                  child: ListView(
+                  child: ReorderableListView(
                     scrollDirection: Axis.horizontal,
-                    controller: Utils.scrollController,
+                    scrollController: Utils.scrollController,
+                    buildDefaultDragHandles: showDragHandles,
+                    onReorder: (oldIndex, newIndex) {
+                      var tab = nav.tabs[oldIndex];
+                      nav.tabs.removeAt(oldIndex);
+                      if(newIndex>=nav.tabs.length){
+                        nav.tabs.add(tab);
+                        newIndex-=1;
+                      }else if(newIndex<oldIndex){
+                        nav.tabs.insert(newIndex, tab);
+                      }else{
+                        nav.tabs.insert(newIndex, tab);
+                        newIndex = newIndex-1;
+                      }
+                     
+                      Utils.navigationController.value =  NavController(currentTabIndex: newIndex, tabs: nav.tabs,);
+                      setState(()=>showDragHandles= false );
+                    },
                     children: nav.tabs.map((tab) => Container(
+                      key: ValueKey(tab.title),
                       width: tab.title.length*22,
                       constraints: const BoxConstraints(
                         minWidth: 150,
@@ -55,9 +75,10 @@ class _MainAreaState extends State<MainArea>  {
                             onPressed:()=> Utils.removeTab(tab) ,
                              icon: const Icon(Icons.close, size: 15,)
                              ),
-                          onTap: () {
-                            Utils.navigationController.value =  NavController(currentTabIndex: nav.tabs.indexOf(tab), tabs: nav.tabs,);
-                          }
+                          onTap: () => Utils.navigationController.value =  NavController(currentTabIndex: nav.tabs.indexOf(tab), tabs: nav.tabs,),
+                          onFocusChange: (value)=> setState(()=>showDragHandles= false ),
+                          onLongPress:()=> setState(()=>showDragHandles= true ),
+                          
                         )
                       ),
                     )).toList(),
