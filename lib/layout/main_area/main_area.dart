@@ -57,13 +57,13 @@ class _MainAreaState extends State<MainArea>  {
                       key: ValueKey(tab.title),
                       width: tab.title.length*22,
                       constraints: const BoxConstraints(
-                        minWidth: 150,
+                        minWidth: 180,
                         maxWidth: 300
                       ),
                       child: Card(
                         elevation: nav.tabs.indexOf(tab) == nav.currentTabIndex ? 3 : 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(3),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                         margin: const EdgeInsets.all(1),
                         child: ListTile(
