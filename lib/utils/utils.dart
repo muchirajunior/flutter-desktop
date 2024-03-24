@@ -44,7 +44,8 @@ class Utils{
 
   static final ScrollController scrollController = ScrollController();
 
-  static final navigationController = ValueNotifier<NavController>(NavController(
+  static final navigationController = ValueNotifier<NavController>(
+    NavController(
       currentTabIndex: -1,
       tabs: [],
     ));
@@ -52,15 +53,13 @@ class Utils{
   static void addTab(Navigation navigation){
     var results=navigationController.value.tabs.where((element) => element.title==navigation.title);
     if(results.isNotEmpty){
-      log("A similar tab exist");
-      navigationController.value.currentTabIndex = navigationController.value.tabs.indexOf(results.first);
+      log("A similar tab exist :: ${navigation.title}");
       navigationController.value = NavController(
         currentTabIndex: navigationController.value.tabs.indexOf(results.first),
         tabs: navigationController.value.tabs, 
       );
       return;
     }
-    scrollController.position.maxScrollExtent;
     navigationController.value=NavController(
       currentTabIndex: navigationController.value.tabs.length,
       tabs: [...navigationController.value.tabs, TabModel(title: navigation.title, tab: navigation.tab)],
